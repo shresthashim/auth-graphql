@@ -1,13 +1,39 @@
 import express from "express";
 
-const app = express();
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 
-const PORT = process.env.PORT || 8000;
+async function startApolloServer() {
+  const app = express();
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello Hero" });
-});
+  app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-});
+  const PORT = process.env.PORT || 8000;
+
+  const gqlServer = new ApolloServer({
+    typeDefs: `
+        type Query {
+            hello: String    
+        }
+        `,
+    resolvers: {
+      Query: {
+        hello: () => "Hello World",
+      },
+    },
+  });
+
+  await gqlServer.start();
+
+  app.get("/", (req, res) => {
+    res.json({ message: "Hello Hero" });
+  });
+
+  app.use(expressMiddleware(gqlServer));
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+  });
+}
+
+startApolloServer();
