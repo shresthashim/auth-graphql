@@ -1,8 +1,10 @@
-import { prisma } from "../../lib/script";
-import UserService, { CreateUserPayload } from "../../services/user.service";
+import UserService, { CreateUserPayload, LoginPayload } from "../../services/user.service";
 
 const queries = {
-  hello: () => "Hello, world!",
+  loginUser: async (_: any, payload: LoginPayload) => {
+    const token = await UserService.loginUser(payload);
+    return token;
+  },
 };
 
 const mutations = {
