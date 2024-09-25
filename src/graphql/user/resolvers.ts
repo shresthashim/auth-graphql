@@ -3,7 +3,7 @@ import UserService, { CreateUserPayload, LoginPayload } from "../../services/use
 const queries = {
   loginUser: async (_: any, payload: LoginPayload) => {
     const token = await UserService.loginUser(payload);
-    return token;
+    return token; 
   },
 };
 

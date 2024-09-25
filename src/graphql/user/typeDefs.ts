@@ -7,13 +7,5 @@ type User {
         userImage: String
         createdAt: String!
         updatedAt: String!
-      }
-
-        type Query {
-            hello: String    
-        }
-        type Mutation {
-            createUser(name: String!, email: String!, password: String!): User!
-        }
-    
+}
 `;
