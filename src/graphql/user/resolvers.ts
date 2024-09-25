@@ -1,20 +1,14 @@
 import { prisma } from "../../lib/script";
+import UserService, { CreateUserPayload } from "../../services/user.service";
 
 const queries = {
   hello: () => "Hello, world!",
 };
 
 const mutations = {
-  createUser: async (_: any, { name, email, password }: { name: string; email: string; password: string }) => {
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password,
-        salt: "heythere",
-      },
-    });
-    return newUser;
+  createUser: async (_: any, payload: CreateUserPayload) => {
+    const newUser = await UserService.createUser(payload);
+    return newUser.id;
   },
 };
 

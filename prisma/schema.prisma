@@ -19,7 +19,6 @@ model User {
   email     String   @unique
   name      String
   password  String
-  salt      String
   userImage String? @map("user_image")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
